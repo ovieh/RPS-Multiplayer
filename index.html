@@ -17,8 +17,21 @@
             <div class="col-11 area"></div>
         </div>
         <div class="row justify-content-around">
-            <div class="col-lg-5 col-sm-9 area"></div>
-            <div class="col-lg-5 col-sm-9 area"></div>
+            <div class="col-lg-3 col-sm-9 area">
+                <div id="player-1" data-player="1"></div>
+            </div>
+            <div class="col-lg-3 col-sm-9 area">
+                <div class="form-group">
+                    <label for="player-name">Your Name</label>
+                    <input class="form-control" id="player-name" type="text">
+                    <button class="btn btn-primary" id="submit-name" type="submit">Submit</button>
+                    
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-9 area">
+                <div id="player-2" data-player="2"></div>
+                
+            </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-11 area"></div>
@@ -29,7 +42,8 @@
 
 <body>
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
     <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
     <script src="assets/js/game.js"></script>
 </body>
