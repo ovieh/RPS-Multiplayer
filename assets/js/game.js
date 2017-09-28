@@ -31,7 +31,7 @@ const config = {
 firebase.initializeApp(config);
 
 let database = firebase.database();
-let userId = 1;
+
 
 
 
@@ -42,13 +42,18 @@ $("#submit-name").on("click", function (event) {
   event.preventDefault();
   let name = $(this).prev().val().trim();
 
+  //using .on seems to send *many* requests  
   database.ref("players").once("value", function (snapshot) {
     if (snapshot.child(1).exists()) {
       addPlayer(name, 2);
+      $("#submit-form").hide();
+      $("#admin").append(`<div> ${name}, you're player two`);
       console.log(snapshot.child(1).exists());
     } else {
       addPlayer(name, 1)
-      console.log(snapshot.child(1).exists())
+      console.log(snapshot.child(1).exists());
+      $("#submit-form").hide();
+      $("#admin").append(`<div> ${name} , you're player one`);
     }
 
   });
@@ -56,6 +61,14 @@ $("#submit-name").on("click", function (event) {
   // console.log(players.user.name);
 });
 
+// Add listerner that displays player choices
+database.ref("players").once("value", (snapshot) => {
+  if(snapshot.child(1).exists() && snapshot.child(2).exists()) {
+    
+  }
+});
+
+// Adds player to database
 let addPlayer = (name, number) => {
   database.ref("players/" + number).set({
     name: name,
@@ -63,3 +76,19 @@ let addPlayer = (name, number) => {
     losses: 0
   });
 }
+
+let connectionsRef = database.ref("/connections");
+let connectedRef = database.ref(".info/connected");
+
+
+connectedRef.on('value', (snapshot) => {
+  if(snapshot.val()) {
+    let con = connectedRef.push(true);
+
+    con.onDisconnect().remove();
+  }
+});
+
+// connectionsRef.on('value', (snapshot) => {
+//   $("#admin").html(snapshot.numChildren());
+// });
